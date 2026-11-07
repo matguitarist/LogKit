@@ -12,15 +12,16 @@ next package update, so keep the API stable and additive.
   Clear), `LogStore` (the app's own log, thread-safe, rotating file).
 - `Sources/LogKitUI/` `LogViewerModel` (state, loading, watching) and
   `LogViewer` (the view and `LogViewerOptions`). Strings in
-  `Resources/Localizable.xcstrings`, English and French.
+  `Resources/Localizable.xcstrings`, English, French, German, Spanish,
+  Brazilian Portuguese and Simplified Chinese (the languages the apps ship).
 - `Tests/LogKitTests/` Swift Testing, for everything in LogKit.
 
 ## Rules
 
 - Anything app-specific stays in the app: its parser, insights, actions,
   banner and inspector reach the viewer through `LogViewerOptions`.
-- Every user-facing string uses `bundle: .module` and gets a French
-  translation in the catalog.
+- Every user-facing string uses `bundle: .module` and gets a translation in
+  every language above (`LocalizationTests` checks).
 - Colors are system colors (`LogLevel.color`); no hard-coded grays.
 - Parsing is fast on 50,000 lines: no Regex per line, split by bytes (CRLF).
 - Add a test for every change in LogKit. `swift build && swift test` pass,

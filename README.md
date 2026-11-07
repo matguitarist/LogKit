@@ -9,7 +9,7 @@ AM2R's tail of a big file, UnbloatMyMac's copy and export, Tadpole's sessions.
   written from any thread to `~/Library/Logs/<App>/<App>.log`. No SwiftUI.
 - **LogKitUI**: `LogViewer`, the SwiftUI view. Re-exports LogKit.
 
-macOS 14 or later. English and French.
+macOS 14 or later. English, French, German, Spanish, Brazilian Portuguese and Simplified Chinese.
 
 ## What the viewer does
 
