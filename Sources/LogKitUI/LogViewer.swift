@@ -154,12 +154,16 @@ public struct LogViewer: View {
     private func header(_ document: LogDocument, summary: LogSummary) -> some View {
         VStack(alignment: .leading, spacing: 8) {
             HStack(spacing: 14) {
-                ForEach(document.metadata, id: \.self) { item in
-                    Label(item.label, systemImage: item.symbol).lineLimit(1)
+                // With an inspector open there's little room: the facts
+                // become icons (named on hover) rather than "SM…".
+                ViewThatFits(in: .horizontal) {
+                    metadataRow(document, iconsOnly: false)
+                    metadataRow(document, iconsOnly: true)
                 }
-                if let headerAccessory = options.headerAccessory { headerAccessory() }
                 Spacer(minLength: 8)
-                status(document)
+                HStack(spacing: 8) { status(document) }
+                    .lineLimit(1)
+                    .fixedSize()
             }
             .font(.callout)
 
@@ -201,6 +205,19 @@ public struct LogViewer: View {
         .padding(.horizontal)
         .padding(.vertical, 10)
         .background(.bar)
+    }
+
+    private func metadataRow(_ document: LogDocument, iconsOnly: Bool) -> some View {
+        HStack(spacing: 14) {
+            ForEach(document.metadata, id: \.self) { item in
+                Label(item.label, systemImage: item.symbol)
+                    .labelStyle(iconsOnly ? AnyLabelStyle(.iconOnly) : AnyLabelStyle(.titleAndIcon))
+                    .lineLimit(1)
+                    .fixedSize()
+                    .help(item.label)
+            }
+            if let headerAccessory = options.headerAccessory { headerAccessory() }
+        }
     }
 
     @ViewBuilder
@@ -532,4 +549,12 @@ private struct InsightsPanel: View {
             }
         }
     }
+}
+
+
+/// A label style chosen at run time.
+private struct AnyLabelStyle: LabelStyle {
+    private let make: (Configuration) -> AnyView
+    init(_ style: some LabelStyle) { make = { AnyView(style.makeBody(configuration: $0)) } }
+    func makeBody(configuration: Configuration) -> some View { make(configuration) }
 }
