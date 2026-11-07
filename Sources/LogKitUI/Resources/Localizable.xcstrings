@@ -35,40 +35,6 @@
         }
       }
     },
-    "%lld earlier messages hidden": {
-      "localizations": {
-        "de": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "%lld frühere Meldungen ausgeblendet"
-          }
-        },
-        "es": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "%lld mensajes anteriores ocultos"
-          }
-        },
-        "fr": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "%lld messages antérieurs masqués"
-          }
-        },
-        "pt-BR": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "%lld mensagens anteriores ocultas"
-          }
-        },
-        "zh-Hans": {
-          "stringUnit": {
-            "state": "translated",
-            "value": "已隐藏 %lld 条较早的消息"
-          }
-        }
-      }
-    },
     "Alert": {
       "localizations": {
         "de": {
@@ -167,6 +133,40 @@
           "stringUnit": {
             "state": "translated",
             "value": "清除"
+          }
+        }
+      }
+    },
+    "Cleared at %@ · %lld earlier messages hidden": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Um %1$@ geleert · %2$lld frühere Meldungen ausgeblendet"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Borrado a las %1$@ · %2$lld mensajes anteriores ocultos"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Effacé à %1$@ · %2$lld messages antérieurs masqués"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Limpo às %1$@ · %2$lld mensagens anteriores ocultas"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "已于 %1$@ 清除 · 已隐藏 %2$lld 条较早的消息"
           }
         }
       }
