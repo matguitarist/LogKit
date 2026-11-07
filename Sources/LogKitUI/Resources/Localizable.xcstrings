@@ -35,6 +35,74 @@
         }
       }
     },
+    "%lld messages": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%lld Meldungen"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%lld mensajes"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%lld messages"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%lld mensagens"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%lld 条消息"
+          }
+        }
+      }
+    },
+    "%lld of %lld messages": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%1$lld von %2$lld Meldungen"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%1$lld de %2$lld mensajes"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%1$lld messages sur %2$lld"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%1$lld de %2$lld mensagens"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%1$lld / %2$lld 条消息"
+          }
+        }
+      }
+    },
     "Alert": {
       "localizations": {
         "de": {
@@ -1123,6 +1191,40 @@
         }
       }
     },
+    "Show All Messages": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Alle Meldungen anzeigen"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Mostrar todos los mensajes"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Afficher tous les messages"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Mostrar todas as mensagens"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "显示所有消息"
+          }
+        }
+      }
+    },
     "Show Messages": {
       "localizations": {
         "de": {
@@ -1221,6 +1323,40 @@
           "stringUnit": {
             "state": "translated",
             "value": "重复记录的消息只显示一次，并注明次数"
+          }
+        }
+      }
+    },
+    "Show every level the log starts with, from every source, without the search": {
+      "localizations": {
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Alle anfangs gezeigten Stufen aus allen Quellen anzeigen, ohne die Suche"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Mostrar todos los niveles iniciales, de todas las fuentes, sin la búsqueda"
+          }
+        },
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Afficher tous les niveaux affichés au départ, de toutes les sources, sans la recherche"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Mostrar todos os níveis iniciais, de todas as fontes, sem a busca"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "显示初始的所有级别、所有来源的消息，不带搜索"
           }
         }
       }

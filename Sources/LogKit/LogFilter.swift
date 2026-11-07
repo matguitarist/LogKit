@@ -27,6 +27,21 @@ public struct LogFilter: Hashable, Sendable {
         return collapseRepeats ? Self.collapsingRepeats(shown) : shown
     }
 
+    /// Whether this filter hides messages `base` shows, by level, source or
+    /// search. Hide Repeats doesn't count: it hides no message, it folds them.
+    public func narrows(_ base: LogFilter) -> Bool {
+        source != nil || !query.trimmingCharacters(in: .whitespaces).isEmpty || !base.levels.isSubset(of: levels)
+    }
+
+    /// `base`'s levels, any source, no search; Hide Repeats stays as it is.
+    public func reset(to base: LogFilter) -> LogFilter {
+        var filter = base
+        filter.source = nil
+        filter.query = ""
+        filter.collapseRepeats = collapseRepeats
+        return filter
+    }
+
     /// Consecutive entries with the same level, source and message become one.
     public static func collapsingRepeats(_ entries: [LogEntry]) -> [LogEntry] {
         var result: [LogEntry] = []

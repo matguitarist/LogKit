@@ -42,6 +42,31 @@ struct FilterTests {
         #expect(summary.sources.first == "App")
     }
 
+    @Test("A filter narrows by level, source or search, not by folding repeats; reset goes back to the start")
+    func narrowAndReset() {
+        let start = LogFilter(levels: [.info, .warning, .error, .critical])
+        var filter = start
+        #expect(!filter.narrows(start))
+        filter.collapseRepeats = true
+        #expect(!filter.narrows(start))
+        filter.levels.insert(.debug)
+        #expect(!filter.narrows(start))   // shows more, hides nothing
+        filter.levels.remove(.info)
+        #expect(filter.narrows(start))
+        filter = start
+        filter.source = "Lua"
+        #expect(filter.narrows(start))
+        filter.source = nil
+        filter.query = "  "
+        #expect(!filter.narrows(start))
+        filter.query = "Mods/MCM"
+        filter.levels = [.error]
+        filter.collapseRepeats = true
+        let reset = filter.reset(to: start)
+        #expect(reset.levels == start.levels && reset.source == nil && reset.query.isEmpty)
+        #expect(reset.collapseRepeats)    // the person's choice stays
+    }
+
     @Test("Clear hides what came before, only for the same file and session")
     func clearMark() throws {
         let url = URL(filePath: "/tmp/a.log")

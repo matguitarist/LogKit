@@ -17,6 +17,7 @@ macOS 14 or later. English, French, German, Spanish, Brazilian Portuguese and Si
 - Problems grouped by source, worst first; a click shows only that source
 - Insights in plain words above the messages, with the app's own buttons
 - Search, Hide Repeats (×12), Follow Live, Clear (⌘K) that leaves the file alone
+- How many messages are shown ("12 of 1,204 messages"), and Show All Messages when a filter hides some
 - Latest, crash and earlier session files, Open Log File…, Open Logs Folder
 - Copy selected lines, Copy Shown Messages (⇧⌘C), Copy Log File, Export Log…, Show in Finder
 - A banner, header items, an inspector and Share actions, all optional, from the app
@@ -26,7 +27,7 @@ macOS 14 or later. English, French, German, Spanish, Brazilian Portuguese and Si
 SwiftPM (`Package.swift`):
 
 ```swift
-.package(url: "https://github.com/matguitarist/LogKit", from: "0.1.0"),
+.package(url: "https://github.com/matguitarist/LogKit", from: "0.3.0"),
 // in the app target:
 .product(name: "LogKitUI", package: "LogKit"),
 ```
@@ -37,7 +38,7 @@ XcodeGen (`project.yml`):
 packages:
   LogKit:
     url: https://github.com/matguitarist/LogKit
-    from: 0.1.0
+    from: 0.3.0
 targets:
   App:
     dependencies:
@@ -66,6 +67,10 @@ LogViewer(model: logModel, options: .init(insightsTitle: "What SMAPI is telling 
 
 Keep the model in the app model (or a `@State` at the app level), so filters,
 Clear and the chosen file survive moving between pages.
+
+An app that starts with some levels hidden (Debug, say) sets the filter and
+`defaultFilter` together, so Show All Messages goes back to that start:
+`model.filter.levels = [.info, .warning, .error, .critical]; model.defaultFilter = model.filter`.
 
 Another format: `LineLogParser { line in ... }` returns a `ParsedLine` for a
 line that starts an entry and nil for a line that continues one.

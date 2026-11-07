@@ -188,6 +188,7 @@ public struct LogViewer: View {
                     .toggleStyle(.checkbox)
                     .controlSize(.small)
                     .help(String(localized: "Show a message logged again and again once, with how many times", bundle: .module))
+                shownCount(document)
             }
             .fixedSize(horizontal: false, vertical: true)
 
@@ -232,6 +233,24 @@ public struct LogViewer: View {
         } else if let lastModified = model.lastModified {
             Text(String(localized: "Updated \(lastModified.formatted(date: .omitted, time: .standard))", bundle: .module))
                 .foregroundStyle(.secondary)
+        }
+    }
+
+    /// "1,204 messages", or "12 of 1,204 messages" with a way back when a filter hides some.
+    @ViewBuilder
+    private func shownCount(_ document: LogDocument) -> some View {
+        let total = document.entries.count
+        if model.filter.narrows(model.defaultFilter) {
+            Text(String(localized: "\(model.shownEntries.count) of \(total) messages", bundle: .module))
+                .font(.caption).foregroundStyle(.secondary).monospacedDigit().fixedSize()
+            Button(String(localized: "Show All Messages", bundle: .module)) {
+                model.filter = model.filter.reset(to: model.defaultFilter)
+            }
+            .controlSize(.small)
+            .help(String(localized: "Show every level the log starts with, from every source, without the search", bundle: .module))
+        } else {
+            Text(String(localized: "\(total) messages", bundle: .module))
+                .font(.caption).foregroundStyle(.secondary).monospacedDigit().fixedSize()
         }
     }
 
