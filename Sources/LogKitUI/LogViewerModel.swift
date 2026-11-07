@@ -49,6 +49,9 @@ public final class LogViewerModel {
         didSet { if fileURL != oldValue { fileDocument = nil; lastModified = nil } }
     }
     public var filter = LogFilter()
+    /// What "Show All Messages" goes back to. An app that starts with some
+    /// levels hidden sets both: `model.filter = start; model.defaultFilter = start`.
+    public var defaultFilter = LogFilter()
     /// Reloads as the file changes and scrolls to new messages.
     public var followLive = true
     public var showInspector = false
