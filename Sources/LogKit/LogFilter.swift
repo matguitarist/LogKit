@@ -22,7 +22,8 @@ public struct LogFilter: Hashable, Sendable {
             levels.contains(entry.level)
                 && (source == nil || entry.source == source)
                 && (query.isEmpty || entry.message.localizedCaseInsensitiveContains(query)
-                    || entry.source.localizedCaseInsensitiveContains(query))
+                    || entry.source.localizedCaseInsensitiveContains(query)
+                    || entry.detail?.localizedCaseInsensitiveContains(query) == true)
         }
         return collapseRepeats ? Self.collapsingRepeats(shown) : shown
     }

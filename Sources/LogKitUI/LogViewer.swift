@@ -55,6 +55,10 @@ public struct LogViewerOptions {
     /// The panel at the right, with its toolbar button title ("Loaded Mods").
     public var inspectorTitle: String?
     public var inspector: ((LogDocument) -> AnyView)?
+    /// An inspector that follows the selection: the selected entries (none,
+    /// one, or several) and the log. Used instead of `inspector` when set;
+    /// double-clicking a row opens it.
+    public var entryInspector: ((_ selected: [LogEntry], _ document: LogDocument) -> AnyView)?
     /// More items for the Share menu ("Upload to smapi.io…"). They get the shown text.
     public var shareActions: [ShareAction]
     /// The color of a source's name; the app's own sources stand out.
@@ -79,6 +83,7 @@ public struct LogViewerOptions {
                 headerAccessory: (() -> AnyView)? = nil,
                 inspectorTitle: String? = nil,
                 inspector: ((LogDocument) -> AnyView)? = nil,
+                entryInspector: ((_ selected: [LogEntry], _ document: LogDocument) -> AnyView)? = nil,
                 shareActions: [ShareAction] = [],
                 sourceColor: @escaping (String) -> Color = { _ in .indigo }) {
         self.emptyTitle = emptyTitle ?? String(localized: "No Log Yet", bundle: .module)
@@ -90,6 +95,7 @@ public struct LogViewerOptions {
         self.headerAccessory = headerAccessory
         self.inspectorTitle = inspectorTitle
         self.inspector = inspector
+        self.entryInspector = entryInspector
         self.shareActions = shareActions
         self.sourceColor = sourceColor
     }
@@ -104,7 +110,6 @@ public struct LogViewerOptions {
 public struct LogViewer: View {
     @Bindable private var model: LogViewerModel
     private let options: LogViewerOptions
-    @State private var selection = Set<LogEntry.ID>()
     @State private var insightsExpanded = true
 
     public init(model: LogViewerModel, options: LogViewerOptions = LogViewerOptions()) {
@@ -314,7 +319,7 @@ public struct LogViewer: View {
     private func entryList(_ document: LogDocument) -> some View {
         let entries = model.shownEntries
         return ScrollViewReader { proxy in
-            List(entries, selection: $selection) { entry in
+            List(entries, selection: $model.selection) { entry in
                 LogRow(entry: entry, sourceColor: options.sourceColor(entry.source)) { model.filter.source = $0 }
                     .listRowBackground(entry.isProblem ? entry.level.color.opacity(0.08) : Color.clear)
                     .id(entry.id)
@@ -327,6 +332,11 @@ public struct LogViewer: View {
                 if let source = entries.first(where: { ids.contains($0.id) })?.source, !source.isEmpty, ids.count == 1 {
                     Button(String(localized: "Show Only \(source)", bundle: .module)) { model.filter.source = source }
                 }
+                if ids.count == 1, let detail = entries.first(where: { ids.contains($0.id) })?.detail, !detail.isEmpty {
+                    Button(String(localized: "Copy Details", bundle: .module)) { copy(detail) }
+                }
+            } primaryAction: { _ in
+                if options.entryInspector != nil { model.showInspector = true }
             }
             .overlay {
                 if entries.isEmpty {
@@ -427,7 +437,7 @@ public struct LogViewer: View {
             .help(String(localized: "Copy, export, or show the log file", bundle: .module))
             .disabled(model.document == nil)
         }
-        if let title = options.inspectorTitle, options.inspector != nil {
+        if let title = options.inspectorTitle, options.inspector != nil || options.entryInspector != nil {
             ToolbarItem {
                 Toggle(isOn: $model.showInspector) {
                     Label(title, systemImage: "sidebar.trailing")
@@ -474,7 +484,12 @@ private struct InspectorModifier: ViewModifier {
 
     @ViewBuilder
     func body(content: Content) -> some View {
-        if let inspector = options.inspector {
+        if let entryInspector = options.entryInspector {
+            content.inspector(isPresented: $model.showInspector) {
+                entryInspector(model.selectedEntries, model.document ?? LogDocument())
+                    .inspectorColumnWidth(min: 240, ideal: 320, max: 480)
+            }
+        } else if let inspector = options.inspector {
             content.inspector(isPresented: $model.showInspector) {
                 inspector(model.document ?? LogDocument())
                     .inspectorColumnWidth(min: 240, ideal: 320, max: 480)
