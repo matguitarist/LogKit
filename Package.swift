@@ -14,6 +14,6 @@ let package = Package(
     targets: [
         .target(name: "LogKit"),
         .target(name: "LogKitUI", dependencies: ["LogKit"], resources: [.process("Resources")]),
-        .testTarget(name: "LogKitTests", dependencies: ["LogKit"]),
+        .testTarget(name: "LogKitTests", dependencies: ["LogKit", "LogKitUI"]),
     ]
 )

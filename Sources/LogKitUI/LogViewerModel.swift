@@ -78,6 +78,8 @@ public final class LogViewerModel {
         switch source {
         case .file: return cleared?.document
         case .store(let store):
+            // Nothing logged yet: the viewer shows the app's empty state, not "No Matching Messages".
+            guard !store.entries.isEmpty || clearMark != nil else { return nil }
             let document = store.document
             return clearMark?.apply(to: document, file: nil) ?? document
         }
