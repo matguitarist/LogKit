@@ -15,6 +15,7 @@ macOS 14 or later. English, French, German, Spanish, Brazilian Portuguese and Si
 
 - Levels as colored chips that are also filters and counts
 - Problems grouped by source, worst first; a click shows only that source
+- A Source menu with every source, for logs that mix the app and the tools it runs
 - Insights in plain words above the messages, with the app's own buttons
 - Search, Hide Repeats (×12), Follow Live, Clear (⌘K) that leaves the file alone
 - How many messages are shown ("12 of 1,204 messages"), and Show All Messages when a filter hides some
@@ -27,7 +28,7 @@ macOS 14 or later. English, French, German, Spanish, Brazilian Portuguese and Si
 SwiftPM (`Package.swift`):
 
 ```swift
-.package(url: "https://github.com/matguitarist/LogKit", from: "0.3.0"),
+.package(url: "https://github.com/matguitarist/LogKit", from: "0.4.0"),
 // in the app target:
 .product(name: "LogKitUI", package: "LogKit"),
 ```
@@ -38,7 +39,7 @@ XcodeGen (`project.yml`):
 packages:
   LogKit:
     url: https://github.com/matguitarist/LogKit
-    from: 0.3.0
+    from: 0.4.0
 targets:
   App:
     dependencies:
