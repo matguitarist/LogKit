@@ -21,7 +21,8 @@ macOS 14 or later. English, French, German, Spanish, Brazilian Portuguese and Si
 - How many messages are shown ("12 of 1,204 messages"), and Show All Messages when a filter hides some
 - Latest, crash and earlier session files, Open Log File…, Open Logs Folder
 - Copy selected lines, Copy Shown Messages (⇧⌘C), Copy Log File, Export Log…, Show in Finder
-- A banner, header items, an inspector and Share actions, all optional, from the app
+- Details behind a message (`LogEntry.detail`: the exact command or value), searched and copied, with Copy Details
+- A banner, header items, an inspector (of the log, or of the selected entries with `entryInspector`; double-click opens it) and Share actions, all optional, from the app
 
 ## Add it to an app
 

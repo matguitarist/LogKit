@@ -50,9 +50,12 @@ public struct LogEntry: Identifiable, Hashable, Sendable {
     public var message: String
     /// The same message again right after: shown once, "×12".
     public var repeats: Int
+    /// What's behind the message (the exact command, value or output): not in
+    /// the row, but searched, copied, and shown by the app's entry inspector.
+    public var detail: String?
 
     public init(id: Int, time: String? = nil, level: LogLevel, code: String? = nil,
-                source: String, message: String, repeats: Int = 1) {
+                source: String, message: String, repeats: Int = 1, detail: String? = nil) {
         self.id = id
         self.time = time
         self.level = level
@@ -60,6 +63,7 @@ public struct LogEntry: Identifiable, Hashable, Sendable {
         self.source = source
         self.message = message
         self.repeats = repeats
+        self.detail = detail
     }
 
     public var isProblem: Bool { level.isProblem }
@@ -127,6 +131,9 @@ public struct LogDocument: Sendable {
             if !entry.source.isEmpty { line += " [\(entry.source)]" }
             line += " " + entry.message
             if entry.repeats > 1 { line += " (×\(entry.repeats))" }
+            if let detail = entry.detail, !detail.isEmpty {
+                line += "\n" + detail.split(separator: "\n", omittingEmptySubsequences: false).map { "    " + $0 }.joined(separator: "\n")
+            }
             return line
         }
         .joined(separator: "\n")

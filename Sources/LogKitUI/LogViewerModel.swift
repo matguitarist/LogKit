@@ -55,6 +55,13 @@ public final class LogViewerModel {
     /// Reloads as the file changes and scrolls to new messages.
     public var followLive = true
     public var showInspector = false
+    /// The rows selected in the list, for Copy and the entry inspector.
+    public var selection = Set<LogEntry.ID>()
+    /// The selected entries, in log order.
+    public var selectedEntries: [LogEntry] {
+        guard !selection.isEmpty else { return [] }
+        return (document?.entries ?? []).filter { selection.contains($0.id) }
+    }
     public private(set) var clearMark: ClearMark?
     public private(set) var loadError: String?
     public private(set) var lastModified: Date?
