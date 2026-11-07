@@ -26,8 +26,11 @@ public enum LogFiles {
         return document
     }
 
+    /// The date of the file a link points to, for logs like "latest.log" that
+    /// link to the newest session: the link's own date never changes.
     public static func modificationDate(of url: URL) -> Date? {
-        (try? FileManager.default.attributesOfItem(atPath: url.path(percentEncoded: false)))?[.modificationDate] as? Date
+        let file = url.resolvingSymlinksInPath()
+        return (try? FileManager.default.attributesOfItem(atPath: file.path(percentEncoded: false)))?[.modificationDate] as? Date
     }
 
     /// The log files in a folder, newest first: one per session for apps

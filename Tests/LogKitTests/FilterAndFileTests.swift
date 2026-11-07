@@ -112,6 +112,19 @@ struct FileTests {
         #expect(LogFiles.sessions(in: folder, prefix: "bg3se_").map(\.lastPathComponent) == ["bg3se_2.log", "bg3se_1.log"])
         #expect(LogFiles.sessions(in: folder).count == 3)
     }
+
+    @Test("A link to the newest session (latest.log) changes date when the session writes, so follow live sees it")
+    func linkDate() throws {
+        let folder = try temporaryFolder()
+        let manager = FileManager.default
+        let session = folder.appending(path: "bg3se_1.log"), link = folder.appending(path: "latest.log")
+        try "x".write(to: session, atomically: true, encoding: .utf8)
+        try manager.createSymbolicLink(at: link, withDestinationURL: session)
+        let written = Date(timeIntervalSince1970: 2_000_000_000)
+        try manager.setAttributes([.modificationDate: written], ofItemAtPath: session.path(percentEncoded: false))
+        #expect(LogFiles.modificationDate(of: link) == written)
+        #expect(LogFiles.modificationDate(of: folder.appending(path: "missing.log")) == nil)
+    }
 }
 
 @Suite("LogStore")
