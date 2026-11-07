@@ -175,6 +175,21 @@ public struct LogViewer: View {
                         }
                     }
                 }
+                if summary.sources.count > 1 {
+                    Menu {
+                        Button(String(localized: "All Sources", bundle: .module)) { model.filter.source = nil }
+                        Divider()
+                        ForEach(summary.sources, id: \.self) { source in
+                            Toggle(source, isOn: Binding(get: { model.filter.source == source },
+                                                         set: { model.filter.source = $0 ? source : nil }))
+                        }
+                    } label: {
+                        Text(model.filter.source ?? String(localized: "All Sources", bundle: .module))
+                    }
+                    .fixedSize()
+                    .controlSize(.small)
+                    .help(String(localized: "Show the messages from one source only", bundle: .module))
+                }
                 if let source = model.filter.source {
                     Button {
                         model.filter.source = nil

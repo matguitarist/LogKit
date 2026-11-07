@@ -67,6 +67,15 @@ struct FilterTests {
         #expect(reset.collapseRepeats)    // the person's choice stays
     }
 
+    @Test("The source menu lists every source, most messages first, without a header's blank source")
+    func sourceList() {
+        let header = LogEntry(id: 100, level: .trace, source: "", message: "=== BG3SE-macOS v0.44.0 ===")
+        let summary = LogSummary(entries: [header] + sample)
+        #expect(summary.sources.first == "App")
+        #expect(!summary.sources.contains(""))
+        #expect(Set(summary.sources) == Set(sample.map(\.source)))
+    }
+
     @Test("Clear hides what came before, only for the same file and session")
     func clearMark() throws {
         let url = URL(filePath: "/tmp/a.log")
