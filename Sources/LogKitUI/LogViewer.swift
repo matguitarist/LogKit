@@ -69,10 +69,11 @@ public struct LogViewerOptions {
         }
     }
 
-    public init(emptyTitle: String = String(localized: "No Log Yet", bundle: .module),
-                emptyMessage: String = String(localized: "Messages appear here as they're logged.", bundle: .module),
+    /// Texts left nil get LogKit's own, in the person's language.
+    public init(emptyTitle: String? = nil,
+                emptyMessage: String? = nil,
                 emptyActions: (() -> AnyView)? = nil,
-                insightsTitle: String = String(localized: "What the log is telling you", bundle: .module),
+                insightsTitle: String? = nil,
                 insightActions: ((LogInsight) -> AnyView)? = nil,
                 banner: ((LogDocument) -> AnyView)? = nil,
                 headerAccessory: (() -> AnyView)? = nil,
@@ -80,10 +81,10 @@ public struct LogViewerOptions {
                 inspector: ((LogDocument) -> AnyView)? = nil,
                 shareActions: [ShareAction] = [],
                 sourceColor: @escaping (String) -> Color = { _ in .indigo }) {
-        self.emptyTitle = emptyTitle
-        self.emptyMessage = emptyMessage
+        self.emptyTitle = emptyTitle ?? String(localized: "No Log Yet", bundle: .module)
+        self.emptyMessage = emptyMessage ?? String(localized: "Messages appear here as they're logged.", bundle: .module)
         self.emptyActions = emptyActions
-        self.insightsTitle = insightsTitle
+        self.insightsTitle = insightsTitle ?? String(localized: "What the log is telling you", bundle: .module)
         self.insightActions = insightActions
         self.banner = banner
         self.headerAccessory = headerAccessory
