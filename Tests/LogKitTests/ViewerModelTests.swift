@@ -17,6 +17,18 @@ struct ViewerModelTests {
         model.clear()
         #expect(model.document?.entries.isEmpty == true)
     }
+
+    @Test("Newest first shows the latest message at the top")
+    func newestFirst() async throws {
+        let store = LogStore()
+        let model = LogViewerModel(store: store)
+        store.post(.info, "first", source: "App")
+        store.post(.info, "second", source: "App")
+        for _ in 0..<50 where store.entries.count < 2 { try await Task.sleep(for: .milliseconds(20)) }
+        #expect(model.shownEntries.map(\.message) == ["first", "second"])
+        model.newestFirst = true
+        #expect(model.shownEntries.map(\.message) == ["second", "first"])
+    }
 }
 
 @Suite("Entry details")

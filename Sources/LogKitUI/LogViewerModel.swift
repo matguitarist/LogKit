@@ -99,7 +99,13 @@ public final class LogViewerModel {
         }
     }
 
-    public var shownEntries: [LogEntry] { filter.apply(to: document?.entries ?? []) }
+    /// The newest message at the top, for a log people read from the latest
+    /// event back (an activity log). Follow Live then keeps the top in view.
+    public var newestFirst = false
+    public var shownEntries: [LogEntry] {
+        let shown = filter.apply(to: document?.entries ?? [])
+        return newestFirst ? shown.reversed() : shown
+    }
 
     /// Messages hidden by Clear, for the header.
     public var hiddenCount: Int {

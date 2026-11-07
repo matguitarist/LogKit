@@ -7,19 +7,27 @@ public struct LogFilter: Hashable, Sendable {
     public var query: String
     /// Folds the same message logged again and again into one line, "×12".
     public var collapseRepeats: Bool
+    /// With Hide Repeats on, a message below Warning that the whole log
+    /// repeats more than this many times is hidden, even between other
+    /// messages. Nil folds runs only. Set by the app, not the person.
+    public var repeatLimit: Int?
 
     public init(levels: Set<LogLevel> = Set(LogLevel.allCases).subtracting([.trace]),
-                source: String? = nil, query: String = "", collapseRepeats: Bool = false) {
+                source: String? = nil, query: String = "", collapseRepeats: Bool = false,
+                repeatLimit: Int? = nil) {
         self.levels = levels
         self.source = source
         self.query = query
         self.collapseRepeats = collapseRepeats
+        self.repeatLimit = repeatLimit
     }
 
     public func apply(to entries: [LogEntry]) -> [LogEntry] {
         let query = query.trimmingCharacters(in: .whitespaces)
+        let noisy = collapseRepeats ? repeatLimit.map { Self.noisyMessages(in: entries, over: $0) } ?? [] : []
         let shown = entries.filter { entry in
             levels.contains(entry.level)
+                && (noisy.isEmpty || entry.isProblem || !noisy.contains(entry.message))
                 && (source == nil || entry.source == source)
                 && (query.isEmpty || entry.message.localizedCaseInsensitiveContains(query)
                     || entry.source.localizedCaseInsensitiveContains(query)
@@ -41,6 +49,13 @@ public struct LogFilter: Hashable, Sendable {
         filter.query = ""
         filter.collapseRepeats = collapseRepeats
         return filter
+    }
+
+    /// Messages below Warning that `entries` holds more than `limit` times, anywhere.
+    public static func noisyMessages(in entries: [LogEntry], over limit: Int) -> Set<String> {
+        var counts: [String: Int] = [:]
+        for entry in entries where !entry.isProblem { counts[entry.message, default: 0] += entry.repeats }
+        return Set(counts.filter { $0.value > limit }.keys)
     }
 
     /// Consecutive entries with the same level, source and message become one.

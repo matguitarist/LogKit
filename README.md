@@ -18,6 +18,7 @@ macOS 14 or later. English, French, German, Spanish, Brazilian Portuguese and Si
 - A Source menu with every source, for logs that mix the app and the tools it runs
 - Insights in plain words above the messages, with the app's own buttons
 - Search, Hide Repeats (×12), Follow Live, Clear (⌘K) that leaves the file alone
+- Optionally, Hide Repeats also hides a chatty message logged more than N times anywhere (`filter.repeatLimit`), and newest first (`model.newestFirst`)
 - How many messages are shown ("12 of 1,204 messages"), and Show All Messages when a filter hides some
 - Latest, crash and earlier session files, Open Log File…, Open Logs Folder
 - Copy selected lines, Copy Shown Messages (⇧⌘C), Copy Log File, Export Log…, Show in Finder
@@ -73,6 +74,12 @@ Clear and the chosen file survive moving between pages.
 An app that starts with some levels hidden (Debug, say) sets the filter and
 `defaultFilter` together, so Show All Messages goes back to that start:
 `model.filter.levels = [.info, .warning, .error, .critical]; model.defaultFilter = model.filter`.
+
+A log where one line repeats hundreds of times between others (a game's
+polling) sets `repeatLimit` the same way: with Hide Repeats on, a message
+below Warning logged more than that many times is hidden. Warnings and worse
+always show. An activity log read from the latest event back sets
+`model.newestFirst = true`; Follow Live then keeps the top in view.
 
 Another format: `LineLogParser { line in ... }` returns a `ParsedLine` for a
 line that starts an entry and nil for a line that continues one.

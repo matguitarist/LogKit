@@ -207,7 +207,9 @@ public struct LogViewer: View {
                 Toggle(String(localized: "Hide Repeats", bundle: .module), isOn: $model.filter.collapseRepeats)
                     .toggleStyle(.checkbox)
                     .controlSize(.small)
-                    .help(String(localized: "Show a message logged again and again once, with how many times", bundle: .module))
+                    .help(model.filter.repeatLimit.map {
+                        String(localized: "Show a message logged again and again once, and hide messages logged more than \($0) times", bundle: .module)
+                    } ?? String(localized: "Show a message logged again and again once, with how many times", bundle: .module))
                 shownCount(document)
             }
             .fixedSize(horizontal: false, vertical: true)
@@ -352,7 +354,12 @@ public struct LogViewer: View {
                 }
             }
             .onChange(of: document.entries.last?.id) {
-                if model.followLive, let last = entries.last { proxy.scrollTo(last.id, anchor: .bottom) }
+                guard model.followLive else { return }
+                if model.newestFirst {
+                    if let first = entries.first { proxy.scrollTo(first.id, anchor: .top) }
+                } else if let last = entries.last {
+                    proxy.scrollTo(last.id, anchor: .bottom)
+                }
             }
         }
     }
