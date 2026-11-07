@@ -1,0 +1,456 @@
+{
+  "sourceLanguage": "en",
+  "strings": {
+    "%@ (%lld)": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%@ (%lld)"
+          }
+        }
+      }
+    },
+    "%lld earlier messages hidden": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "%lld messages antérieurs masqués"
+          }
+        }
+      }
+    },
+    "Alert": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Alerte"
+          }
+        }
+      }
+    },
+    "Choose which log to show": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Choisir le journal à afficher"
+          }
+        }
+      }
+    },
+    "Clear": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Effacer"
+          }
+        }
+      }
+    },
+    "Copy": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Copier"
+          }
+        }
+      }
+    },
+    "Copy Log File": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Copier le fichier journal"
+          }
+        }
+      }
+    },
+    "Copy Shown Messages": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Copier les messages affichés"
+          }
+        }
+      }
+    },
+    "Copy, export, or show the log file": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Copier, exporter ou afficher le fichier journal"
+          }
+        }
+      }
+    },
+    "Debug": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Débogage"
+          }
+        }
+      }
+    },
+    "Earlier Sessions": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Sessions précédentes"
+          }
+        }
+      }
+    },
+    "Error": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Erreur"
+          }
+        }
+      }
+    },
+    "Export Log…": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Exporter le journal…"
+          }
+        }
+      }
+    },
+    "Follow Live": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Suivre en direct"
+          }
+        }
+      }
+    },
+    "Hide %@ messages": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Masquer les messages %@"
+          }
+        }
+      }
+    },
+    "Hide Repeats": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Masquer les répétitions"
+          }
+        }
+      }
+    },
+    "Hide everything logged so far and show only new messages (⌘K). The log file isn't changed.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Masquer tout ce qui a été journalisé jusqu’ici et n’afficher que les nouveaux messages (⌘K). Le fichier journal n’est pas modifié."
+          }
+        }
+      }
+    },
+    "Info": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Info"
+          }
+        }
+      }
+    },
+    "Log Cleared": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Journal effacé"
+          }
+        }
+      }
+    },
+    "Log File": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Fichier journal"
+          }
+        }
+      }
+    },
+    "Messages appear here as they're logged.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Les messages apparaissent ici à mesure qu’ils sont journalisés."
+          }
+        }
+      }
+    },
+    "New messages appear here as they're logged.": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Les nouveaux messages apparaissent ici à mesure qu’ils sont journalisés."
+          }
+        }
+      }
+    },
+    "No Log Yet": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Pas encore de journal"
+          }
+        }
+      }
+    },
+    "No Matching Messages": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Aucun message correspondant"
+          }
+        }
+      }
+    },
+    "Open Log File…": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ouvrir un fichier journal…"
+          }
+        }
+      }
+    },
+    "Open Logs Folder": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ouvrir le dossier des journaux"
+          }
+        }
+      }
+    },
+    "Problems:": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Problèmes :"
+          }
+        }
+      }
+    },
+    "Read the log file again (⌘R)": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Relire le fichier journal (⌘R)"
+          }
+        }
+      }
+    },
+    "Reload": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Recharger"
+          }
+        }
+      }
+    },
+    "Search log": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Rechercher dans le journal"
+          }
+        }
+      }
+    },
+    "Share": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Partager"
+          }
+        }
+      }
+    },
+    "Show %@ messages": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Afficher les messages %@"
+          }
+        }
+      }
+    },
+    "Show All": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Tout afficher"
+          }
+        }
+      }
+    },
+    "Show Messages": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Afficher les messages"
+          }
+        }
+      }
+    },
+    "Show Only %@": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Afficher seulement %@"
+          }
+        }
+      }
+    },
+    "Show a message logged again and again once, with how many times": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Afficher une seule fois un message répété, avec le nombre de fois"
+          }
+        }
+      }
+    },
+    "Show in Finder": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Afficher dans le Finder"
+          }
+        }
+      }
+    },
+    "Show new messages as they're logged, and scroll to them": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Afficher les nouveaux messages dès qu’ils arrivent et défiler jusqu’à eux"
+          }
+        }
+      }
+    },
+    "Show only %@": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Afficher seulement %@"
+          }
+        }
+      }
+    },
+    "Showing the end of a long log": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Fin d’un long journal"
+          }
+        }
+      }
+    },
+    "Source: %@": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Source : %@"
+          }
+        }
+      }
+    },
+    "Trace": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Trace"
+          }
+        }
+      }
+    },
+    "Updated %@": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Mis à jour à %@"
+          }
+        }
+      }
+    },
+    "Warning": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Avertissement"
+          }
+        }
+      }
+    },
+    "What the log is telling you": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Ce que dit le journal"
+          }
+        }
+      }
+    }
+  },
+  "version": "1.0"
+}
