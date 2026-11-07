@@ -223,7 +223,7 @@ public struct LogViewer: View {
     @ViewBuilder
     private func status(_ document: LogDocument) -> some View {
         if model.clearMark != nil {
-            Text(String(localized: "\(model.hiddenCount) earlier messages hidden", bundle: .module))
+            Text(String(localized: "Cleared at \((model.clearMark?.date ?? .now).formatted(date: .omitted, time: .standard)) · \(model.hiddenCount) earlier messages hidden", bundle: .module))
                 .foregroundStyle(.secondary)
             Button(String(localized: "Show All", bundle: .module)) { model.showAll() }
                 .controlSize(.small)

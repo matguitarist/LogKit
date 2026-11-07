@@ -59,6 +59,15 @@ struct FilterTests {
         #expect(try #require(mark.apply(to: LogDocument(entries: sample), file: nil)).entries.map(\.id) == [3, 4, 5])
     }
 
+    @Test("Clear remembers when it happened, so the viewer can say \"Cleared at …\"")
+    func clearDate() throws {
+        let before = Date.now
+        let mark = ClearMark(lastID: 2)
+        #expect(mark.date >= before && mark.date <= .now)
+        let earlier = Date(timeIntervalSince1970: 1_800_000_000)
+        #expect(ClearMark(lastID: 2, date: earlier).date == earlier)
+    }
+
     @Test("Text for a bug report")
     func text() {
         var repeated = sample[1]
