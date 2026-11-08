@@ -33,6 +33,29 @@ struct FilterTests {
         #expect(shown[1].repeats == 2)
     }
 
+    @Test("With a repeat limit, Hide Repeats also hides a message below Warning logged too often, even between others")
+    func repeatLimit() {
+        var log: [LogEntry] = []
+        for i in 0..<4 {
+            log.append(entry(i * 3, .debug, "Lua", "polling"))
+            log.append(entry(i * 3 + 1, .warning, "Lua", "polling"))
+            log.append(entry(i * 3 + 2, .info, "App", "frame \(i)"))
+        }
+        // Debug "polling" 4 times; the Warning with the same text 4 times too.
+        let levels = Set(LogLevel.allCases)
+        var filter = LogFilter(levels: levels, collapseRepeats: true, repeatLimit: 3)
+        let shown = filter.apply(to: log)
+        #expect(!shown.contains { $0.level == .debug })               // hidden: logged 4 > 3 times
+        #expect(shown.filter { $0.level == .warning }.count == 4)     // a warning always shows
+        filter.repeatLimit = 4
+        #expect(filter.apply(to: log).filter { $0.level == .debug }.count == 4)   // not more than 4
+        filter.repeatLimit = 3
+        filter.collapseRepeats = false
+        #expect(filter.apply(to: log).count == log.count)             // only with Hide Repeats on
+        // Show All Messages keeps the app's limit.
+        #expect(LogFilter(source: "Lua").reset(to: LogFilter(repeatLimit: 50)).repeatLimit == 50)
+    }
+
     @Test("Problems: worst first, then most frequent; counts include repeats")
     func summary() {
         let summary = LogSummary(entries: sample)

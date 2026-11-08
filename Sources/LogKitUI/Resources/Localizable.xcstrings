@@ -1361,6 +1361,40 @@
         }
       }
     },
+    "Show a message logged again and again once, and hide messages logged more than %lld times": {
+      "localizations": {
+        "fr": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Afficher une seule fois un message répété, et masquer les messages consignés plus de %lld fois"
+          }
+        },
+        "de": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Eine immer wieder protokollierte Meldung einmal zeigen und Meldungen ausblenden, die mehr als %lld-mal protokolliert wurden"
+          }
+        },
+        "es": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Mostrar una vez un mensaje registrado una y otra vez, y ocultar los mensajes registrados más de %lld veces"
+          }
+        },
+        "pt-BR": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "Mostrar uma vez uma mensagem registrada várias vezes, e ocultar mensagens registradas mais de %lld vezes"
+          }
+        },
+        "zh-Hans": {
+          "stringUnit": {
+            "state": "translated",
+            "value": "重复记录的消息只显示一次，并隐藏记录超过 %lld 次的消息"
+          }
+        }
+      }
+    },
     "Show a message logged again and again once, with how many times": {
       "localizations": {
         "de": {
