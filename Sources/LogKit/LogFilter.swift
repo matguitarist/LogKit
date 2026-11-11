@@ -87,6 +87,10 @@ public struct LogSummary: Sendable {
     /// Every source, most messages first.
     public var sources: [String]
 
+    /// True when the problems name at least one source. A log without
+    /// sources has only "—", which says no more than the level chips.
+    public var problemsHaveSources: Bool { problems.contains { $0.source != "—" } }
+
     public init(entries: [LogEntry]) {
         var counts: [LogLevel: Int] = [:]
         var problems: [String: (worst: LogLevel, count: Int)] = [:]

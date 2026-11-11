@@ -63,6 +63,8 @@ struct FilterTests {
         #expect(summary.counts[.warning] == 2)
         #expect(summary.problems.map(\.source) == ["RetroArch", "Dolphin"])
         #expect(summary.problems[1].count == 2)
+        #expect(summary.problemsHaveSources)
+        #expect(!LogSummary(entries: [LogEntry(id: 0, level: .error, source: "", message: "x")]).problemsHaveSources)
         #expect(summary.sources.first == "App")
     }
 

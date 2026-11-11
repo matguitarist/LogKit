@@ -214,7 +214,7 @@ public struct LogViewer: View {
             }
             .fixedSize(horizontal: false, vertical: true)
 
-            if !summary.problems.isEmpty {
+            if summary.problemsHaveSources {
                 ScrollView(.horizontal, showsIndicators: false) {
                     HStack(spacing: 6) {
                         Text("Problems:", bundle: .module).font(.callout.bold()).foregroundStyle(.secondary)
