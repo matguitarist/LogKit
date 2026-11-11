@@ -12,6 +12,10 @@ import Observation
 @MainActor
 public final class LogStore {
     public private(set) var entries: [LogEntry] = []
+    /// Facts for the viewer's header ("nginx:1.27", "Up 3 hours").
+    public var metadata: [LogMetadata] = []
+    /// Findings in plain words, shown above the messages.
+    public var insights: [LogInsight] = []
     public nonisolated let fileURL: URL?
     public nonisolated let limit: Int
 
@@ -37,9 +41,16 @@ public final class LogStore {
     /// Logs from anywhere: the app's code, a background task, a tool's output handler.
     /// Lines arrive in the viewer in batches, so a tool printing hundreds of lines doesn't stall it.
     public nonisolated func post(_ level: LogLevel, _ message: String, source: String) {
-        let date = Date()
+        post(level, message, source: source, date: Date())
+    }
+
+    /// Logs a line that happened at `date`, for lines read from elsewhere with
+    /// their own time (a container, a server). Lines from another day show
+    /// their date too ("11-05 11:43:53"). `detail` is what's behind the
+    /// message, shown by the entry inspector.
+    public nonisolated func post(_ level: LogLevel, _ message: String, source: String, date: Date, detail: String? = nil) {
         writer?.write(date: date, level: level, source: source, message: message)
-        if inbox.add(LogInbox.Item(date: date, level: level, source: source, message: message)) {
+        if inbox.add(LogInbox.Item(date: date, level: level, source: source, message: message, detail: detail)) {
             Task { @MainActor in self.flush() }
         }
     }
@@ -49,29 +60,34 @@ public final class LogStore {
         entries.removeAll()
     }
 
-    public var document: LogDocument { LogDocument(entries: entries) }
+    public var document: LogDocument { LogDocument(entries: entries, metadata: metadata, insights: insights) }
 
     private func flush() {
         let items = inbox.take()
         guard !items.isEmpty else { return }
         var updated = entries
         for item in items {
-            if let last = updated.last, last.level == item.level, last.source == item.source, last.message == item.message {
+            if let last = updated.last, last.level == item.level, last.source == item.source,
+               last.message == item.message, last.detail == item.detail {
                 updated[updated.count - 1].repeats += 1
             } else {
                 nextID += 1
                 updated.append(LogEntry(id: nextID, time: Self.clockTime(item.date), level: item.level,
-                                        source: item.source, message: item.message))
+                                        source: item.source, message: item.message, detail: item.detail))
             }
         }
         if updated.count > limit { updated.removeFirst(updated.count - limit + limit / 10) }
         entries = updated
     }
 
-    /// "22:14:05": quick, and the same in every locale like the log file.
-    nonisolated static func clockTime(_ date: Date) -> String {
-        let c = Calendar.current.dateComponents([.hour, .minute, .second], from: date)
-        return String(format: "%02d:%02d:%02d", c.hour ?? 0, c.minute ?? 0, c.second ?? 0)
+    /// "22:14:05", or "11-05 22:14:05" on another day: quick, and the same
+    /// in every locale like the log file.
+    nonisolated static func clockTime(_ date: Date, now: Date = Date()) -> String {
+        let calendar = Calendar.current
+        let c = calendar.dateComponents([.month, .day, .hour, .minute, .second], from: date)
+        let time = String(format: "%02d:%02d:%02d", c.hour ?? 0, c.minute ?? 0, c.second ?? 0)
+        guard !calendar.isDate(date, inSameDayAs: now) else { return time }
+        return String(format: "%02d-%02d ", c.month ?? 0, c.day ?? 0) + time
     }
 }
 
@@ -82,6 +98,7 @@ final class LogInbox: @unchecked Sendable {
         let level: LogLevel
         let source: String
         let message: String
+        var detail: String? = nil
     }
 
     private let lock = NSLock()

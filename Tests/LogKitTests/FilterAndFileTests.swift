@@ -1,6 +1,7 @@
 import Foundation
 import Testing
 @testable import LogKit
+import LogKitUI
 
 private func entry(_ id: Int, _ level: LogLevel, _ source: String, _ message: String) -> LogEntry {
     LogEntry(id: id, time: "00:00:0\(id % 10)", level: level, source: source, message: message)
@@ -62,6 +63,8 @@ struct FilterTests {
         #expect(summary.counts[.warning] == 2)
         #expect(summary.problems.map(\.source) == ["RetroArch", "Dolphin"])
         #expect(summary.problems[1].count == 2)
+        #expect(summary.problemsHaveSources)
+        #expect(!LogSummary(entries: [LogEntry(id: 0, level: .error, source: "", message: "x")]).problemsHaveSources)
         #expect(summary.sources.first == "App")
     }
 
@@ -224,5 +227,33 @@ struct StoreTests {
         for _ in 0..<50 where store.entries.last?.message != "m249" { try await Task.sleep(for: .milliseconds(20)) }
         #expect(store.entries.count <= 100)
         #expect(store.entries.last?.message == "m249")
+    }
+
+    @Test("A line posted with its own time keeps it, its detail, and shows the date on another day")
+    @MainActor
+    func datedPost() async throws {
+        let store = LogStore()
+        let calendar = Calendar.current
+        let earlier = calendar.date(from: DateComponents(year: 2026, month: 11, day: 5, hour: 11, minute: 43, second: 53))!
+        store.post(.error, "exited", source: "web", date: earlier, detail: "code 137")
+        store.post(.info, "now", source: "web", date: Date())
+        for _ in 0..<50 where store.entries.count < 2 { try await Task.sleep(for: .milliseconds(20)) }
+        #expect(store.entries.first?.time == "11-05 11:43:53")
+        #expect(store.entries.first?.detail == "code 137")
+        #expect(store.entries.last?.time?.count == 8)
+    }
+
+    @Test("The store's metadata and insights reach its document and the viewer")
+    @MainActor
+    func insights() async throws {
+        let store = LogStore()
+        store.metadata = [LogMetadata("nginx:1.27", symbol: "shippingbox")]
+        store.insights = [LogInsight(id: "restarts", level: .warning, title: "Restarted 4 times")]
+        store.post(.info, "up", source: "")
+        for _ in 0..<50 where store.entries.isEmpty { try await Task.sleep(for: .milliseconds(20)) }
+        #expect(store.document.insights.map(\.id) == ["restarts"])
+        let model = LogViewerModel(store: store)
+        #expect(model.document?.insights.count == 1)
+        #expect(model.document?.metadata.first?.label == "nginx:1.27")
     }
 }

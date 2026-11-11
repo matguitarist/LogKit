@@ -100,6 +100,20 @@ LogViewer(model: LogViewerModel(store: .app))
 The file uses LogKit's format, `2026-11-06T22:14:05-05:00 WARN [Source] message`,
 which `LogKitFormat.parser` reads back.
 
+## A live stream from elsewhere (a container, a server)
+
+A memory-only `LogStore` takes lines with their own time and details, and
+carries the header's metadata and the insights:
+
+```swift
+let store = LogStore(limit: 10_000)   // no file
+store.post(.warning, "Monitor #6 failing", source: "MONITOR", date: dockerTime, detail: rawLine)
+store.metadata = [LogMetadata("nginx:1.27", symbol: "shippingbox")]
+store.insights = [LogInsight(id: "restarts", level: .warning, title: "Restarted 4 times in the last hour")]
+```
+
+A line from another day shows its date: `11-05 11:43:53`.
+
 ## Develop
 
 `swift build` and `swift test` (Swift Testing). CI runs both on macOS for
